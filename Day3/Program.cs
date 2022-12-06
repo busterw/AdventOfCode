@@ -3,6 +3,7 @@
     private static void Main(string[] args)
     {
         Part1();
+        Part2();
     }
 
     private static void Part1()
@@ -24,8 +25,6 @@
             {
                 score += (int)Enum.Parse<CharacterValues>(character.ToString());
             }
-            if (firstHalf.Length != secondHalf.Length)
-                Console.WriteLine("Uneven!");
         }
 
         Console.WriteLine(score);
@@ -38,6 +37,22 @@
         var backpacks = input.Split('\n');
 
         int score = 0;
+
+        for (int i = 0; i <= backpacks.Length - 3; i += 3)
+        {
+            int maxSelect = i + 3;
+            var itemstoCompare = backpacks[i..maxSelect];
+
+            var firstTwoCommonChars = itemstoCompare[0].Intersect(itemstoCompare[1]);
+            var secondTwoCommonChars = itemstoCompare[1].Intersect(itemstoCompare[2]);
+
+            var allThreeCommonChars = firstTwoCommonChars.Intersect(secondTwoCommonChars);
+
+            foreach (var character in allThreeCommonChars)
+            {
+                score += (int)Enum.Parse<CharacterValues>(character.ToString());
+            }
+        }
 
         Console.WriteLine(score);
     }
